@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/my_pace', function () {
-//     return view('my_pace');
-// });
+Route::get('/my_pace', function () {
+    return view('my_pace');
+});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
