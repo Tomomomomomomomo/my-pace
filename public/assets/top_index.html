@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Knewave&family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+    <!-- TUI Calendar のCSS（公式デザイン） -->
+    <link rel="stylesheet" href="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.css">
+    <!-- 自分のCSS（カスタム上書きは最後に） -->
+    <link rel="stylesheet" href="./css/top.css">
+</head>
+
+<body>
+
+    <body>
+        <header class="header">
+            <!-- 画像ロゴを削除して文字に変更 -->
+            <div class="logo">
+                <h1 class="logo-text">My Pace</h1>
+            </div>
+            <div class="header-icons">
+                <button class="icon-btn" aria-label="Add">＋</button>
+                <button class="icon-btn bell-btn" aria-label="Notifications">
+                    <img src="/public/assets/img/bell1.png" alt="通知">
+                </button>
+                <img class="avatar" src="/public/assets/img/normal.jpg" alt="Me">
+            </div>
+        </header>
+
+        <!-- メインコンテンツ -->
+        <main class="main-container">
+            <!-- To Do リスト -->
+            <section class="todo-area">
+                <!-- 左カラム：ToDo -->
+                <div class="todo">
+                    <img class="tag-img" src="/public/assets/img/todo_design_tag.png" alt="tag">
+                    <div class="todo-head">
+                        <h2>To Do list</h2>
+                    </div>
+
+                    <ul id="todo-list">
+                        <li>
+                            <input type="checkbox">
+                            <label>タスク1</label>
+                            <button class="todo-del">×</button>
+                        </li>
+                        <li>
+                            <input type="checkbox">
+                            <label>タスク2</label>
+                            <button class="todo-del">×</button>
+                        </li>
+                        <li>
+                            <input type="checkbox">
+                            <label>タスク3</label>
+                            <button class="todo-del">×</button>
+                        </li>
+                        <li>
+                            <input type="checkbox">
+                            <label>タスク4</label>
+                            <button class="todo-del">×</button>
+                        </li>
+                        <li>
+                            <input type="checkbox">
+                            <label>タスク5</label>
+                            <button class="todo-del">×</button>
+                        </li>
+                    </ul>
+
+                    <!-- 追加フォーム（ToDo用） -->
+                    <div class="todo-form">
+                        <input type="text" id="new-task" placeholder="新しいタスクを入力">
+                        <button id="add-task">追加</button>
+                    </div>
+                </div>
+
+                <!-- 右カラム：ツールバー＋フォーム＋カレンダー -->
+                <div class="calendar-col">
+                    <div class="cal-toolbar">
+                        <button id="calPrev">◀︎</button>
+                        <h3 id="calMonthLabel"></h3>
+                        <button id="calNext">▶︎</button>
+                        <button id="calToday">Today</button>
+                    </div>
+
+                    <form id="calForm" class="cal-form">
+                        <input type="text" id="evtTitle" placeholder="予定タイトル">
+                        <input type="date" id="evtStart">
+                        <input type="date" id="evtEnd">
+                        <label><input type="checkbox" id="evtAllDay"> 終日</label>
+                        <button type="submit" id="evtAddBtn">追加</button>
+                    </form>
+
+                    <div id="calendar"></div>
+                </div>
+            </section>
+
+            <!-- School time & Project -->
+            <section class="projects">
+                <h2 class="projects-title">School time & Project</h2>
+
+                <div class="days">
+                    <!-- ★ 1日ぶんのカード（必要なら複製して使う） -->
+                    <article class="day">
+                        <header class="day-head">
+                            <span class="day-label">Mon.</span>
+                        </header>
+
+                        <div class="day-photo">
+                            <input id="mondayFile" type="file" accept="image/*" class="file-input"
+                                onchange="previewImage(event, 'mondayPreview')">
+                            <img id="mondayPreview" alt="">
+                        </div>
+
+                        <div class="timetable">
+                            <div class="tt-time">1限</div><input class="tt-subject" type="text" placeholder="科目">
+                            <div class="tt-time">2限</div><input class="tt-subject" type="text" placeholder="科目">
+                            <div class="tt-time">3限</div><input class="tt-subject" type="text" placeholder="科目">
+                            <div class="tt-time">4限</div><input class="tt-subject" type="text" placeholder="科目">
+                            <div class="tt-time">5限</div><input class="tt-subject" type="text" placeholder="科目">
+                            <div class="tt-time">6限</div><input class="tt-subject" type="text" placeholder="科目">
+                        </div>
+
+                        <textarea class="note" placeholder="課題・持ち物メモ"></textarea>
+                    </article>
+
+                    <!-- Tue -->
+                    <article class="day">
+                        <header class="day-head"><span class="day-label">Tue.</span></header>
+                        <div class="day-photo">
+                            <input id="tuesdayFile" type="file" accept="image/*" class="file-input"
+                                onchange="previewImage(event, 'tuesdayPreview')">
+                            <img id="tuesdayPreview" alt="">
+                        </div>
+                        <div class="timetable">
+                            <div class="tt-time">1限</div><input class="tt-subject" type="text" placeholder="科目">
+                            <div class="tt-time">2限</div><input class="tt-subject" type="text" placeholder="科目">
+                            <div class="tt-time">3限</div><input class="tt-subject" type="text" placeholder="科目">
+                            <div class="tt-time">4限</div><input class="tt-subject" type="text" placeholder="科目">
+                            <div class="tt-time">5限</div><input class="tt-subject" type="text" placeholder="科目">
+                            <div class="tt-time">6限</div><input class="tt-subject" type="text" placeholder="科目">
+                        </div>
+                        <textarea class="note" placeholder="課題・持ち物メモ"></textarea>
+                    </article>
+
+                    <!-- Wed -->
+                    <article class="day">
+                        <header class="day-head"><span class="day-label">Wed.</span></header>
+                        <div class="day-photo">
+                            <input id="wednesdayFile" type="file" accept="image/*" class="file-input"
+                                onchange="previewImage(event, 'wednesdayPreview')">
+                            <img id="wednesdayPreview" alt="">
+                        </div>
+                        <div class="timetable">
+                            <div class="tt-time">1限</div><input class="tt-subject" type="text" placeholder="科目">
+                            <div class="tt-time">2限</div><input class="tt-subject" type="text" placeholder="科目">
+                            <div class="tt-time">3限</div><input class="tt-subject" type="text" placeholder="科目">
+                            <div class="tt-time">4限</div><input class="tt-subject" type="text" placeholder="科目">
+                            <div class="tt-time">5限</div><input class="tt-subject" type="text" placeholder="科目">
+                            <div class="tt-time">6限</div><input class="tt-subject" type="text" placeholder="科目">
+                        </div>
+                        <textarea class="note" placeholder="課題・持ち物メモ"></textarea>
+                    </article>
+
+                    <!-- Thu -->
+                    <article class="day">
+                        <header class="day-head"><span class="day-label">Thu.</span></header>
+                        <div class="day-photo">
+                            <input id="thursdayFile" type="file" accept="image/*" class="file-input"
+                                onchange="previewImage(event, 'thursdayPreview')">
+                            <img id="thursdayPreview" alt="">
+                        </div>
+                        <div class="timetable">
+                            <div class="tt-time">1限</div><input class="tt-subject" type="text" placeholder="科目">
+                            <div class="tt-time">2限</div><input class="tt-subject" type="text" placeholder="科目">
+                            <div class="tt-time">3限</div><input class="tt-subject" type="text" placeholder="科目">
+                            <div class="tt-time">4限</div><input class="tt-subject" type="text" placeholder="科目">
+                            <div class="tt-time">5限</div><input class="tt-subject" type="text" placeholder="科目">
+                            <div class="tt-time">6限</div><input class="tt-subject" type="text" placeholder="科目">
+                        </div>
+                        <textarea class="note" placeholder="課題・持ち物メモ"></textarea>
+                    </article>
+
+                    <!-- Fri -->
+                    <article class="day">
+                        <header class="day-head"><span class="day-label">Fri.</span></header>
+                        <div class="day-photo">
+                            <input id="fridayFile" type="file" accept="image/*" class="file-input"
+                                onchange="previewImage(event, 'fridayPreview')">
+                            <img id="fridayPreview" alt="">
+                        </div>
+                        <div class="timetable">
+                            <div class="tt-time">1限</div><input class="tt-subject" type="text" placeholder="科目">
+                            <div class="tt-time">2限</div><input class="tt-subject" type="text" placeholder="科目">
+                            <div class="tt-time">3限</div><input class="tt-subject" type="text" placeholder="科目">
+                            <div class="tt-time">4限</div><input class="tt-subject" type="text" placeholder="科目">
+                            <div class="tt-time">5限</div><input class="tt-subject" type="text" placeholder="科目">
+                            <div class="tt-time">6限</div><input class="tt-subject" type="text" placeholder="科目">
+                        </div>
+                        <textarea class="note" placeholder="課題・持ち物メモ"></textarea>
+                    </article>
+                </div>
+            </section>
+        </main>
+
+        <script>
+            // 選んだ画像をプレビュー表示する
+            function previewImage(event, previewId) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        document.getElementById(previewId).src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        </script>
+
+        <script>
+            // --- ToDo: 追加/削除/完了トグル（ローカル保存つき） ---
+            (function () {
+                // ★ 今のHTMLに合わせたID
+                const list = document.getElementById('todo-list');  // <ul id="todo-list">
+                const input = document.getElementById('new-task');   // <input id="new-task">
+                const addBtn = document.getElementById('add-task');   // <button id="add-task">
+                const STORAGE_KEY = 'mypace_todos_v1';
+
+                if (!list) return; // 要素がなければ何もしない
+
+                // ---- 便利関数：liからテキストとチェック状態を取得 ----
+                function getItemState(li) {
+                    const checkbox = li.querySelector('input[type="checkbox"]');
+                    // <span class="todo-text"> or <label> のどちらでもOKにする
+                    const textNode = li.querySelector('.todo-text') || li.querySelector('label');
+                    const text = textNode ? textNode.textContent : '';
+                    const done = !!(checkbox && checkbox.checked);
+                    return { text, done };
+                }
+
+                // ---- 保存 & 読み込み ----
+                function save() {
+                    const data = [...list.querySelectorAll('li')].map(getItemState);
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                }
+
+                function load() {
+                    const raw = localStorage.getItem(STORAGE_KEY);
+                    if (!raw) return; // 初回はそのまま（HTMLに書いた初期5件を使う）
+                    try {
+                        const arr = JSON.parse(raw);
+                        list.innerHTML = '';
+                        arr.forEach(({ text, done }) => list.appendChild(makeItem(text, done)));
+                    } catch {
+                        // 破損してたら無視
+                    }
+                }
+
+                // ---- 要素生成（現在のCSS/HTMLに合わせた構造で作る）----
+                function makeItem(text, done = false) {
+                    const li = document.createElement('li');
+                    li.innerHTML = `
+        <input type="checkbox" ${done ? 'checked' : ''}>
+        <label></label>
+        <button class="todo-del" aria-label="削除">×</button>`;
+                    li.querySelector('label').textContent = text;
+                    if (done) li.classList.add('is-done');
+                    return li;
+                }
+
+                // ---- 追加 ----
+                function addTask() {
+                    const val = (input?.value || '').trim();
+                    if (!val) return;
+                    list.appendChild(makeItem(val));
+                    input.value = '';
+                    save();
+                }
+
+                // ---- 既存のliに .is-done を同期（リロード時の見た目を揃える）----
+                function syncDoneClass() {
+                    list.querySelectorAll('li').forEach(li => {
+                        const { done } = getItemState(li);
+                        li.classList.toggle('is-done', done);
+                    });
+                }
+
+                // ---- クリック（削除＆完了切替）----
+                list.addEventListener('click', (e) => {
+                    const li = e.target.closest('li');
+                    if (!li) return;
+
+                    if (e.target.matches('.todo-del')) {
+                        li.remove();
+                        save();
+                    } else if (e.target.matches('input[type="checkbox"]')) {
+                        li.classList.toggle('is-done', e.target.checked);
+                        save();
+                    }
+                });
+
+                // ---- イベント登録 ----
+                addBtn?.addEventListener('click', addTask);
+                input?.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') addTask();
+                });
+
+                // ---- 初期化 ----
+                syncDoneClass(); // 既存HTMLのチェック状態を反映
+                load();          // 保存があれば復元（上書き）
+            })();
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const Calendar = tui.Calendar;
+                const cal = new Calendar('#calendar', {
+                    defaultView: 'month',
+                    usageStatistics: false,
+                    isReadOnly: true,
+                    month: { startDayOfWeek: 0, isAlways6Weeks: true }
+                });
+
+                const labelEl = document.getElementById('calMonthLabel');
+
+                function formatMonthLabel(date) {
+                    const y = date.getFullYear();
+                    const m = date.getMonth() + 1; // 1-12
+                    return `${y}年 ${m}月`;        // ← 常にこの形式
+                }
+                function updateMonthLabel() {
+                    labelEl.textContent = formatMonthLabel(cal.getDate());
+                }
+
+                // ナビ
+                document.getElementById('calPrev').onclick = () => { cal.prev(); updateMonthLabel(); };
+                document.getElementById('calNext').onclick = () => { cal.next(); updateMonthLabel(); };
+                document.getElementById('calToday').onclick = () => { cal.today(); updateMonthLabel(); };
+
+                updateMonthLabel();
+            });
+        </script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                // TUI Calendar
+                const Calendar = tui.Calendar;
+                const cal = new Calendar('#calendar', {
+                    defaultView: 'month',
+                    usageStatistics: false,
+                    isReadOnly: true,                    // クリック選択OFF（青枠出ない）
+                    month: { startDayOfWeek: 0, isAlways6Weeks: true },
+                    theme: { common: { saturday: { color: '#237bff' } } }, // 土曜の色
+                    calendars: [
+                        { id: 'school', name: 'School', backgroundColor: '#00a9ff' },
+                        { id: 'personal', name: 'Personal', backgroundColor: '#03bd9e' }
+                    ]
+                });
+
+                // 月ラベル固定フォーマット
+                const labelEl = document.getElementById('calMonthLabel');
+                const fmt = (d) => `${d.getFullYear()}年 ${d.getMonth() + 1}月`;
+                const updateLabel = () => labelEl.textContent = fmt(cal.getDate());
+                document.getElementById('calPrev').onclick = () => { cal.prev(); updateLabel(); };
+                document.getElementById('calNext').onclick = () => { cal.next(); updateLabel(); };
+                document.getElementById('calToday').onclick = () => { cal.today(); updateLabel(); };
+                updateLabel();
+
+                // ローカル保存で予定を保持
+                const STORAGE_KEY = 'mypace_calendar_events_v1';
+                const loadEvents = () => {
+                    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+                    catch { return []; }
+                };
+                const saveEvents = (arr) => localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+
+                let events = loadEvents();
+                if (events.length) cal.createEvents(events);
+
+                // 予定追加フォーム
+                const $ = (id) => document.getElementById(id);
+                $('calForm').addEventListener('submit', () => {
+                    const title = ($('evtTitle').value || '').trim();
+                    const start = $('evtStart').value;
+                    const end = $('evtEnd').value;
+                    const allDay = $('evtAllDay').checked;
+                    if (!title || !start) return;
+
+                    const startISO = allDay ? `${start}T00:00:00` : `${start}T09:00:00`;
+                    const endDate = end || start;
+                    const endISO = allDay ? `${endDate}T23:59:59` : `${endDate}T10:00:00`;
+
+                    const evt = {
+                        id: String(Date.now()),
+                        calendarId: 'personal',
+                        title,
+                        category: allDay ? 'allday' : 'time',
+                        start: startISO,
+                        end: endISO
+                    };
+
+                    cal.createEvents([evt]);
+                    events.push(evt);
+                    saveEvents(events);
+
+                    // 軽くリセット
+                    $('evtTitle').value = '';
+                    $('evtEnd').value = '';
+                });
+
+                // 予定削除（任意）
+                cal.on('clickEvent', ({ event }) => {
+                    if (!event) return;
+                    const ok = confirm(`「${event.title}」を削除しますか？`);
+                    if (!ok) return;
+                    cal.deleteEvent(event.id, event.calendarId);
+                    events = events.filter(e => !(e.id === event.id && e.calendarId === event.calendarId));
+                    saveEvents(events);
+                });
+            });
+        </script>
+
+        <!-- TUI Calendar の JS（機能用） -->
+        <script src="https://uicdn.toast.com/calendar/latest/toastui-calendar.min.js" defer></script>
+
+        <!-- 自分のJS（TUIの後に実行する必要あり） -->
+        <script src="/js/top.js" defer></script>
+    </body>
+</body>
+
+</html>

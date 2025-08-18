@@ -1,0 +1,812 @@
+body {
+    background-color: #fff;
+
+    /* 丸い背景パーツを2枚配置 */
+    background-image:
+        url("/public/assets/img/todo_design1.png"),
+        /* 右上の丸 */
+        url("/public/assets/img/todo_design2.png");
+    /* 左下の丸 */
+
+    background-repeat: no-repeat, no-repeat;
+
+    /* 配置 */
+    background-position:
+        top -60px right -40px,
+        /* 右上 */
+        bottom -80px left -60px;
+    /* 左下 */
+
+    /* 大きさ */
+    background-size:
+        260px,
+        /* 右上 */
+        320px;
+    /* 左下 */
+}
+
+/* 📱 スマホ用に少し小さく */
+@media (max-width: 480px) {
+    body {
+        background-size:
+            180px,
+            /* 右上 */
+            220px;
+        /* 左下 */
+    }
+}
+
+/* ───────── 変数 ───────── */
+:root {
+    --header-bg: rgba(174, 218, 238, 0.5);
+    --header-height: 80px;
+    /* 高さは少し低め */
+    --logo-height: 100px;
+    /* Knewaveロゴ大きめ */
+    --icon-size: 22px;
+    --avatar-size: 50px;
+}
+
+/* ヘッダー：左にロゴ、右にアイコン */
+.header {
+    display: flex;
+    justify-content: space-between;
+    /* ← 左右に分ける */
+    align-items: center;
+    /* ← 縦中央 */
+    height: var(--header-height);
+    padding: 0 16px;
+}
+
+/* ───────── ロゴ（左寄せ） ───────── */
+.logo {
+    display: flex;
+    justify-content: flex-start;
+    /* ← 左寄せに戻す */
+    align-items: center;
+    padding: 0;
+    /* 余白いらなければ0でOK */
+}
+
+.logo-text {
+    font-family: "Knewave", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: clamp(28px, 6vw, 56px);
+    line-height: 1;
+    letter-spacing: .5px;
+    margin: 0;
+    text-align: left;
+    /* ← 左寄せ */
+    color: #333;
+}
+
+/* ───────── 右側アイコン群（右寄せ） ───────── */
+.header-icons {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.header-icons .icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    font-size: var(--icon-size);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.header-icons .avatar {
+    width: var(--avatar-size);
+    height: var(--avatar-size);
+    border-radius: 50%;
+    object-fit: cover;
+    display: block;
+}
+
+/* 共通ボタン（既にあるやつを使う） */
+.icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+}
+
+/* ベル画像専用 */
+.bell-btn img {
+    width: 24px;
+    /* ← 大きさ調整 */
+    height: 24px;
+    object-fit: contain;
+    display: block;
+}
+
+/* レイアウト：スマホ優先 */
+.main-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    /* 1カラムで縦積み */
+    gap: 16px;
+    padding: 12px;
+}
+
+/* 余白リセット（ヘッダー無し前提の上下の“謎の余白”対策） */
+html,
+body,
+main,
+section,
+h1,
+h2,
+p {
+    margin: 0;
+    padding: 0;
+}
+
+/* ==== To Do（左カラムを少し狭める・背景固定エリア） ==== */
+.todo-area {
+    display: grid;
+    grid-template-columns: 0.75fr 1.25fr;
+    /* 左をさらに狭める */
+    width: 100%;
+    height: 500px;
+    /* 背景サイズ固定 */
+    background: #AEDAEE;
+}
+
+/* タグに被らないよう、ToDoボックスの上余白を少し確保 */
+.todo {
+    position: relative;
+    padding: 46px 20px 20px;
+    /* ← タグサイズに合わせて上だけ確保 */
+    align-items: flex-start;
+    /* リストは左寄せのまま */
+}
+
+/* 見出しは中央寄せキープ */
+.todo-head {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* タグを左上の角に大きめ＆水平で密着させる */
+.tag-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 240px;
+    /* ← もっと大きくしたいなら 260〜300px でもOK */
+    height: auto;
+    transform: translate(-42%, -46%) rotate(0deg);
+    /* ← 角へギリギリまで寄せる */
+    z-index: 5;
+    pointer-events: none;
+}
+
+/* タイトルは中央寄せ維持 */
+.todo h2 {
+    font-family: "Knewave", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: clamp(24px, 5vw, 36px);
+    color: #23323a;
+    margin: 0 0 16px;
+    text-align: center;
+    width: 100%;
+}
+
+/* （参考：行内タグを使う場合はこのまま） */
+.tag-inline {
+    width: 60px;
+    height: auto;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+/* スマホで少し小さくするなら */
+@media (max-width: 480px) {
+    .tag-img {
+        width: 150px;
+        transform: translate(-25%, -30%) rotate(-6deg);
+    }
+}
+
+/* 追加フォーム（入力＋ボタン） */
+.todo-form {
+    display: flex;
+    justify-content: center;
+    /* 入力と追加ボタンだけ中央 */
+    gap: 10px;
+    width: 100%;
+    margin-top: 16px;
+}
+
+/* 入力欄 */
+#new-task {
+    width: 220px;
+    /* ← ボタンと同じ固定幅にする */
+    height: 42px;
+    padding: 0 12px;
+    /* ← 横paddingを少し小さめに */
+    border: 2px solid #f8cdd3;
+    border-radius: 10px;
+    font-size: 16px;
+    outline: none;
+    background: #fff;
+    box-sizing: border-box;
+    /* ← これ超重要！padding含めて幅220pxに収める */
+    transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+#new-task:focus {
+    border-color: #f4a9b4;
+    box-shadow: 0 0 6px rgba(244, 169, 180, .4);
+}
+
+/* 追加ボタン */
+#add-task {
+    width: 220px;
+    /* ← 入力と同じ幅 */
+    height: 42px;
+    background-color: #f8cdd3;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    box-sizing: border-box;
+    /* ← これで余白も含めて揃う */
+    transition: background-color .2s ease, transform .2s ease;
+}
+
+#add-task:hover {
+    background-color: #f4a9b4;
+    transform: translateY(-2px);
+}
+
+#add-task:active {
+    background-color: #f1929d;
+    transform: translateY(0);
+}
+
+/* リスト */
+.todo ul {
+    list-style: none;
+    /* ●を消す */
+    margin: 0;
+    /* 余白リセット */
+    padding-left: 0;
+    /* 先頭のインデントを消す */
+    width: 100%;
+}
+
+/* 行のレイアウトを整える（チェック/テキスト/×） */
+.todo li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, .15);
+    text-align: left;
+    /* 念のため左寄せ固定 */
+}
+
+.todo li:last-child {
+    border-bottom: none;
+}
+
+/* チェックボックス */
+.todo li input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #1f556a;
+}
+
+/* タスク文字 */
+.todo li label,
+.todo-text {
+    font-family: "Noto Sans JP", sans-serif;
+    font-size: 16px;
+    color: #213038;
+    flex: 1;
+    word-break: break-word;
+}
+
+/* 削除ボタン */
+.todo .todo-del {
+    margin-left: auto;
+    border: none;
+    background: transparent;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 2px 4px;
+    color: #213038;
+    transition: color .2s ease;
+}
+
+.todo .todo-del:hover {
+    color: #a00;
+}
+
+/* 右カラム（縦にツールバー→フォーム→カレンダー） */
+.calendar-col {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px;
+    min-height: 420px;
+    /* ここは好みで */
+}
+
+/* カレンダーの白枠（オーバーレイの基準に） */
+#calendar {
+    position: relative;
+    flex: 1;
+    min-height: 320px;
+    padding: 8px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: #fff;
+    overflow: visible;
+    /* ← 変更（もしくはこの行ごと削除） */
+}
+
+/* ───────── 月表示ツールバー（重複定義をこれ1つに統一） ───────── */
+.cal-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.cal-toolbar h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+/* ───────── カレンダー内オーバーレイ ───────── */
+.cal-overlay {
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    /* 下固定。上にしたければ top:8px; に */
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .12);
+    padding: 10px 12px;
+    max-height: 45%;
+    overflow: auto;
+    z-index: 30;
+    display: none;
+    /* JSで表示切替 */
+}
+
+.cal-overlay-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.cal-overlay-title {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 700;
+    color: #213038;
+}
+
+.cal-overlay-close {
+    border: none;
+    background: #f8cdd3;
+    color: #fff;
+    border-radius: 8px;
+    height: 30px;
+    padding: 0 10px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.cal-overlay-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.cal-overlay-list li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 4px;
+    border-bottom: 1px solid #f2f4f6;
+}
+
+.cal-overlay-list li:last-child {
+    border-bottom: none;
+}
+
+.cal-ev-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex: 0 0 10px;
+}
+
+.cal-ev-title {
+    font-size: 14px;
+    color: #333;
+    flex: 1;
+}
+
+.cal-ev-time {
+    font-size: 12px;
+    color: #60707a;
+}
+
+#calMonthLabel {
+    font-family: "Noto Sans JP", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #213038;
+    margin: 0;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 160px;
+    /* ラベル幅 */
+    height: 42px;
+    /* ToDo入力/ボタンと同じ高さ */
+    padding: 0 16px;
+
+    border: 2px solid #f8cdd3;
+    /* 淡いピンク枠 */
+    border-radius: 10px;
+    /* 同じ丸み */
+    background: #fff;
+    /* 白背景で視認性UP */
+}
+
+.cal-toolbar button {
+    height: 42px;
+    /* 同じ高さ */
+    padding: 0 24px;
+    /* 横幅ひろめ */
+    background-color: #f8cdd3;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+
+.cal-toolbar button:hover {
+    background-color: #f4a9b4;
+    transform: translateY(-2px);
+}
+
+.cal-toolbar button:active {
+    background-color: #f1929d;
+    transform: translateY(0);
+}
+
+/* 予定追加フォーム（ToDoと統一感） */
+.cal-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    /* 真ん中配置（左寄せにしたい時は flex-start） */
+    margin: 2px 0 8px;
+}
+
+.cal-form input[type="text"],
+.cal-form input[type="date"] {
+    height: 42px;
+    padding: 0 16px;
+    border: 2px solid #f8cdd3;
+    border-radius: 10px;
+    background: #fff;
+    font-size: 16px;
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+}
+
+.cal-form input[type="text"]:focus,
+.cal-form input[type="date"]:focus {
+    border-color: #f4a9b4;
+    box-shadow: 0 0 6px rgba(244, 169, 180, .4);
+}
+
+.cal-form-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+#evtAddBtn {
+    height: 42px;
+    padding: 0 24px;
+    background: #f8cdd3;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .2s, transform .2s;
+}
+
+#evtAddBtn:hover {
+    background: #f4a9b4;
+    transform: translateY(-2px);
+}
+
+#evtAddBtn:active {
+    background: #f1929d;
+    transform: translateY(0);
+}
+
+/* スマホで少しコンパクトに */
+@media (max-width: 420px) {
+    #calMonthLabel {
+        min-width: 130px;
+        font-size: 15px;
+        height: 38px;
+        padding: 0 12px;
+    }
+
+    .cal-toolbar button {
+        height: 38px;
+        padding: 0 14px;
+        font-size: 14px;
+    }
+
+    .cal-toolbar {
+        gap: 8px;
+    }
+
+    .cal-form {
+        gap: 8px;
+    }
+
+    .cal-form input[type="text"] {
+        width: 100%;
+        max-width: 360px;
+    }
+}
+
+/* ───── School time & Project ───── */
+.projects {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .08);
+    padding: 16px;
+}
+
+.projects .projects-title {
+    font-family: "Knewave", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-size: clamp(20px, 4.6vw, 28px);
+    margin: 0 0 14px;
+    color: #23323a;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 6px;
+}
+
+/* 横並び（スマホは折り返し） */
+.projects .days {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* 1日カード */
+.projects .day {
+    flex: 1 1 200px;
+    /* 最小200pxで伸縮 */
+    max-width: 240px;
+    /* 5枚並びを崩しにくくする */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 12px;
+}
+
+/* 見出し */
+.projects {
+    background: none;   /* 背景色を消す */
+    border: none;       /* 枠線を消す */
+    border-radius: 0;   /* 角丸を消す */
+    box-shadow: none;   /* 影を消す */
+    padding: 16px;      /* パディングは残す */
+
+    /* ここから時間割の色（カスタムプロパティ） */
+    --tt1: #fde2e4; --tt1b: #f5c2c7;  /* 1限：ピンク */
+    --tt2: #e2ece9; --tt2b: #c9ded7;  /* 2限：ミント */
+    --tt3: #fff1e6; --tt3b: #ffd7ba;  /* 3限：アプリコット */
+    --tt4: #e8eaf6; --tt4b: #c5cae9;  /* 4限：ラベンダー */
+    --tt5: #e3f2fd; --tt5b: #bbdefb;  /* 5限：スカイ */
+    --tt6: #f3e5f5; --tt6b: #e1bee7;  /* 6限：ライラック */
+}
+
+/* 中央寄せ */
+.projects .timetable {
+    margin: 8px auto;
+}
+
+/* 各行に色を割り当て（1限〜6限） */
+.projects .timetable > :nth-child(1),
+.projects .timetable > :nth-child(2){
+    background: var(--tt1);
+    border-color: var(--tt1b);
+}
+.projects .timetable > :nth-child(3),
+.projects .timetable > :nth-child(4){
+    background: var(--tt2);
+    border-color: var(--tt2b);
+}
+.projects .timetable > :nth-child(5),
+.projects .timetable > :nth-child(6){
+    background: var(--tt3);
+    border-color: var(--tt3b);
+}
+.projects .timetable > :nth-child(7),
+.projects .timetable > :nth-child(8){
+    background: var(--tt4);
+    border-color: var(--tt4b);
+}
+.projects .timetable > :nth-child(9),
+.projects .timetable > :nth-child(10){
+    background: var(--tt5);
+    border-color: var(--tt5b);
+}
+.projects .timetable > :nth-child(11),
+.projects .timetable > :nth-child(12){
+    background: var(--tt6);
+    border-color: var(--tt6b);
+}
+
+/* 曜日ラベルだけ別フォントにしたい場合はここを変更 */
+.projects .day-head {
+    text-align: center;
+}
+
+/* 中央揃えはそのまま */
+.projects .day-label {
+    font-family: "Knewave", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 700;
+    /* ← 700を読み込んでいるので効く */
+    font-size: 18px;
+    /* 変化が分かるよう少し大きめに */
+    color: #213038;
+    padding-bottom: 0;
+}
+
+/* 画像：正方形・枠あり・角丸なし（クリックでファイル選択） */
+.projects .day-photo {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    margin-bottom: 8px;
+}
+
+.projects .day-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 1px solid #333;
+    border-radius: 0;
+    display: block;
+    background: #f7f7f7;
+}
+
+.projects .file-input {
+    position: absolute;
+    inset: 0;
+    /* 画像と同じ領域をクリックで開く */
+    opacity: 0;
+    /* ボタンは見せない */
+    cursor: pointer;
+}
+
+/* 時間割：2列（時限/科目） */
+.projects .timetable {
+    width: 200px;
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    column-gap: 8px;
+    row-gap: 6px;
+    margin: 6px 0 8px;
+}
+
+.projects .tt-time {
+    font-size: 13px;
+    color: #60707a;
+    line-height: 36px;
+    text-align: center;
+    border: 1px solid #d0d6da;
+    background: #f9fbfc;
+}
+
+.projects .tt-subject {
+    height: 36px;
+    padding: 0 8px;
+    border: 1px solid #333;
+    border-radius: 0;
+    font-size: 14px;
+    outline: none;
+    background: #fff;
+}
+
+/* メモ：画像と同じ幅で四角・枠あり（少し低め） */
+.projects .note {
+    width: 200px;
+    height: 120px;
+    padding: 8px;
+    border: 1px solid #333;
+    border-radius: 0;
+    font-size: 14px;
+    resize: vertical;
+    /* 好みで none にして固定も可 */
+    box-sizing: border-box;
+}
+
+/* 表示順を指定：画像 → 曜日 → 時間割 → メモ */
+.projects .day-photo {
+    order: 1;
+}
+
+.projects .day-head {
+    order: 2;
+    margin: 6px 0 8px;
+}
+
+.projects .timetable {
+    order: 3;
+}
+
+.projects .note {
+    order: 4;
+}
+
+/* “+n more” ポップアップの前面化（tui.calendar対策） */
+.toastui-calendar-more-container,
+.toastui-calendar-popup-container,
+.toastui-calendar-detail-container {
+    z-index: 99999 !important;
+}
+
+/* きゅっと詰まる時のレスポンシブ微調整 */
+@media (max-width:640px) {
+    .projects .day {
+        max-width: 100%;
+    }
+
+    .projects .day-photo,
+    .projects .timetable,
+    .projects .note {
+        width: 100%;
+    }
+}
