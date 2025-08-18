@@ -1,0 +1,41 @@
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>Profile/Setting</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- タイトルを手書き太字っぽくするためのフォント（ネット接続時に有効） -->
+  <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="stage">
+    <!-- 背景の大きな円（カードの後ろに潜る） -->
+    <div class="bg-circle bg-pink" aria-hidden="true"></div>
+    <div class="bg-circle bg-mint" aria-hidden="true"></div>
+
+    <!-- 青いカード -->
+    <section class="card">
+      <!-- 赤い付箋：カードに“半分食い込んで”上にはみ出す -->
+      <span class="tape" aria-hidden="true"></span>
+
+      <h1 class="title">Profile/Setting</h1>
+
+      <!-- アイコン（薄いグレーの円） -->
+      <div class="avatar">アイコン</div>
+
+      <!-- 入力フォーム群 -->
+      <form class="profile-form" action="#" method="post">
+        <label class="label" for="name">name</label>
+        <input class="field" type="text" id="name" name="name">
+
+        <label class="label" for="login_id">log in ID</label>
+        <input class="field" type="text" id="login_id" name="login_id">
+
+        <label class="label" for="password">password</label>
+        <input class="field" type="password" id="password" name="password">
+
+        <button class="save" type="submit">save</button>
+      </form>
+    </section>
+  </div>
+</body>
+</html>
