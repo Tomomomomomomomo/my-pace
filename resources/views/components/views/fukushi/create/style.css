@@ -1,0 +1,70 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9; /* ページ全体の背景色（薄い水色） */
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 400px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #add4f4; /* 白枠の内側の背景色 → 青色に変更 */
+    border: 1px solid #000000;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: black* タイトル文字色を白に変更（青背景に映えるように） */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: black/* ラベル文字色も白に変更 */
+}
+
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: white;
+    color: black;
+}
+
+textarea {
+    height: 100px;
+    resize: none;
+}
+
+.datepicker-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5em;
+    margin-top: 5px;
+    color: white;
+}
+
+.post-button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #b3e5fc;
+    border: 1px solid #000000;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+}

@@ -1,0 +1,106 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    position: relative;
+    width: 300px;
+    height: 400px;
+    background-color: #add8e6;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.triangle {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 40px solid transparent;
+    border-right: 40px solid transparent;
+    border-bottom: 40px solid red;
+}
+
+.circle {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.top-right {
+    top: -50px;
+    right: -50px;
+    background-color: #ccffcc;
+}
+
+.bottom-left {
+    bottom: -50px;
+    left: -50px;
+    background-color: #ffccff;
+}
+
+.login-box {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+h1 {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 36px;
+    color: black;
+    margin: 0;
+}
+
+p {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 18px;
+    color: black;
+    margin: 10px 0;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    font-size: 14px;
+    color: black;
+    margin: 10px 0 5px;
+}
+
+input {
+    width: 200px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    width: 100px;
+    padding: 10px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+}
+
+button[type="button"] {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+}

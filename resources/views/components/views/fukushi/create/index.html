@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Post</title>
+        <link rel="stylesheet" href="/style.css" />
+    </head>
+    <body>
+        <div class="container">
+            <h1>Post</h1>
+            <form>
+                <div class="form-group">
+                    <label for="date">〇月〇日</label>
+                    <input type="text" id="date" name="date" />
+                </div>
+                <div class="form-group">
+                    <label for="title">タイトル</label>
+                    <input type="text" id="title" name="title" />
+                </div>
+                <div class="form-group">
+                    <label for="content">内容を入力してください</label>
+                    <textarea id="content" name="content"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="datepicker">yyyy/mm/dd</label>
+                    <input type="text" id="datepicker" name="datepicker" />
+                    <button type="button" class="datepicker-button">📅</button>
+                </div>
+                <button type="submit" class="post-button">post</button>
+            </form>
+        </div>
+    </body>
+</html>
