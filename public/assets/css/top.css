@@ -1,29 +1,41 @@
+/* --- 背景の丸が操作を邪魔しないようにする --- */
 body {
-    background-color: #fff;
-
-    /* 丸い背景パーツを2枚配置 */
-    background-image:
-        url("/public/assets/img/todo_design1.png"),
-        /* 右上の丸 */
-        url("/public/assets/img/todo_design2.png");
-    /* 左下の丸 */
-
-    background-repeat: no-repeat, no-repeat;
-
-    /* 配置 */
-    background-position:
-        top -60px right -40px,
-        /* 右上 */
-        bottom -80px left -60px;
-    /* 左下 */
-
-    /* 大きさ */
-    background-size:
-        260px,
-        /* 右上 */
-        320px;
-    /* 左下 */
+    position: relative;
+    /* overflow: hidden; ← これは消したままでOK */
 }
+
+/* 背景の丸は完全に背面＆クリック不可に */
+body::before,
+body::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    /* ← これで丸にする */
+    pointer-events: none;
+    /* 操作の邪魔をしない */
+    z-index: -1;
+    /* 背面へ */
+}
+
+/* 右上の丸 */
+body::before {
+    width: 450px;
+    height: 450px;
+    background: #C3F0E5;
+    top: -160px;
+    right: -120px;
+}
+
+/* 左下の丸 */
+body::after {
+    width: 400px;
+    height: 400px;
+    background: #FFDEEC;
+    bottom: -200px;
+    left: -160px;
+}
+
+
 
 /* 📱 スマホ用に少し小さく */
 @media (max-width: 480px) {
@@ -636,19 +648,36 @@ p {
 
 /* 見出し */
 .projects {
-    background: none;   /* 背景色を消す */
-    border: none;       /* 枠線を消す */
-    border-radius: 0;   /* 角丸を消す */
-    box-shadow: none;   /* 影を消す */
-    padding: 16px;      /* パディングは残す */
+    background: none;
+    /* 背景色を消す */
+    border: none;
+    /* 枠線を消す */
+    border-radius: 0;
+    /* 角丸を消す */
+    box-shadow: none;
+    /* 影を消す */
+    padding: 16px;
+    /* パディングは残す */
 
     /* ここから時間割の色（カスタムプロパティ） */
-    --tt1: #fde2e4; --tt1b: #f5c2c7;  /* 1限：ピンク */
-    --tt2: #e2ece9; --tt2b: #c9ded7;  /* 2限：ミント */
-    --tt3: #fff1e6; --tt3b: #ffd7ba;  /* 3限：アプリコット */
-    --tt4: #e8eaf6; --tt4b: #c5cae9;  /* 4限：ラベンダー */
-    --tt5: #e3f2fd; --tt5b: #bbdefb;  /* 5限：スカイ */
-    --tt6: #f3e5f5; --tt6b: #e1bee7;  /* 6限：ライラック */
+    --tt1: #fde2e4;
+    --tt1b: #f5c2c7;
+    /* 1限：ピンク */
+    --tt2: #e2ece9;
+    --tt2b: #c9ded7;
+    /* 2限：ミント */
+    --tt3: #fff1e6;
+    --tt3b: #ffd7ba;
+    /* 3限：アプリコット */
+    --tt4: #e8eaf6;
+    --tt4b: #c5cae9;
+    /* 4限：ラベンダー */
+    --tt5: #e3f2fd;
+    --tt5b: #bbdefb;
+    /* 5限：スカイ */
+    --tt6: #f3e5f5;
+    --tt6b: #e1bee7;
+    /* 6限：ライラック */
 }
 
 /* 中央寄せ */
@@ -657,33 +686,38 @@ p {
 }
 
 /* 各行に色を割り当て（1限〜6限） */
-.projects .timetable > :nth-child(1),
-.projects .timetable > :nth-child(2){
+.projects .timetable> :nth-child(1),
+.projects .timetable> :nth-child(2) {
     background: var(--tt1);
     border-color: var(--tt1b);
 }
-.projects .timetable > :nth-child(3),
-.projects .timetable > :nth-child(4){
+
+.projects .timetable> :nth-child(3),
+.projects .timetable> :nth-child(4) {
     background: var(--tt2);
     border-color: var(--tt2b);
 }
-.projects .timetable > :nth-child(5),
-.projects .timetable > :nth-child(6){
+
+.projects .timetable> :nth-child(5),
+.projects .timetable> :nth-child(6) {
     background: var(--tt3);
     border-color: var(--tt3b);
 }
-.projects .timetable > :nth-child(7),
-.projects .timetable > :nth-child(8){
+
+.projects .timetable> :nth-child(7),
+.projects .timetable> :nth-child(8) {
     background: var(--tt4);
     border-color: var(--tt4b);
 }
-.projects .timetable > :nth-child(9),
-.projects .timetable > :nth-child(10){
+
+.projects .timetable> :nth-child(9),
+.projects .timetable> :nth-child(10) {
     background: var(--tt5);
     border-color: var(--tt5b);
 }
-.projects .timetable > :nth-child(11),
-.projects .timetable > :nth-child(12){
+
+.projects .timetable> :nth-child(11),
+.projects .timetable> :nth-child(12) {
     background: var(--tt6);
     border-color: var(--tt6b);
 }
