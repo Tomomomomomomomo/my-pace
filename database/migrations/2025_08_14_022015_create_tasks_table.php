@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
+            $table->string('title');       // タイトル
+            $table->text('content');       // 内容
+            $table->date('task_date');     // 日付 (yyyy-mm-dd)
             $table->timestamps();
         });
     }
